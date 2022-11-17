@@ -1,27 +1,25 @@
+<!--
+  ? All view components are Single File Components with responsibilities separated into script, template, and style
+-->
+<!-- * Logic Layer: -->
 <script setup>
+import { ref } from 'vue';
+const useChangeWithDelay = (state, newVal, delay) => {
+  setTimeout(() => {
+    state.value = newVal
+  }, delay)
+}
+const product = ref('Socks') // Vue equivalent of useState in React.
+
+useChangeWithDelay(product, 'New Socks', 1000)
 </script>
 
+<!-- * View Layer: -->
 <template>
-  <header>
-    <div class="wrapper">
-      Hello World
-    </div>
-  </header>
-
-  <main>
-  </main>
+  <!-- Supports partial binding, any javascript expression can go in here. -->
+  <h1>{{ product }}</h1>
 </template>
 
+<!-- * Style Layer: -->
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-}
 </style>
