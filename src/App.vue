@@ -3,7 +3,7 @@
 -->
 <!-- * Logic Layer: -->
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import socksGreenImage from './assets/images/socks_green.jpeg'
 import socksBlueImage from './assets/images/socks_blue.jpeg'
 
@@ -16,15 +16,15 @@ const variants = ref([
   { id: 2234, color: 'green', image: socksGreenImage },
   { id: 2235, color: 'blue', image: socksBlueImage }
 ])
+const cart = reactive([])
 
-const addToCart = () => {
-  cart.value +=1
+const addToCart = (item) => {
+  cart.push(item)
 }
 const updateImage = (variantImage) => {
   image.value = variantImage
 }
 
-const cart = ref(0)
 
 </script>
 
@@ -34,7 +34,7 @@ const cart = ref(0)
 -->
 <template>
   <div class="nav-bar" />
-  <div class="cart">Cart({{cart}})</div>
+  <div class="cart">Cart({{cart.length}})</div>
   <div class="product-display">
     <div class="product-container">
       <div class="product-image">
@@ -50,7 +50,7 @@ const cart = ref(0)
         <div
           v-for="variant in variants"
           :key="variant.id"
-          @mouseover="updateImage(variant.image)"
+          @click="updateImage(variant.image)"
           class="color-circle"
           :style="{ backgroundColor: variant.color}"
           >
@@ -58,7 +58,7 @@ const cart = ref(0)
         <button
           class="button"
           :class="{ disabledButton: !inStock }"
-          v-on:click="addToCart"
+          @click="addToCart"
           :disabled="!inStock"
           >
           Add to Cart
@@ -70,4 +70,7 @@ const cart = ref(0)
 
 <!-- * Style Layer: -->
 <style scoped>
+  .color-circle {
+    cursor: pointer;
+  }
 </style>
